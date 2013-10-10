@@ -1,8 +1,8 @@
-# Simple coffescript-node Notifier
+# Simple coffeescript-node Notifier
 This little snippet counts how much time have you spended in the task via growl notification, and it also throws a message using pomodoro technique.
 
 = Why another notifier?
-I wanted to learn coffescript...
+I wanted to learn coffeescript...
  And I got a problem: 
  For project management I wanted to count how much time I spend in certain task or project, so i decided to install a timer, but i didnt feel like using one from the app store, so I decided build my own in coffescript!
 
@@ -18,7 +18,7 @@ https://github.com/visionmedia/node-growl
 
 # How To use:
 To start simply:
-	node coffenoti.js 
+	node coffeenoti.js 
 
 To finish
 	ctr + z || ctr + c
