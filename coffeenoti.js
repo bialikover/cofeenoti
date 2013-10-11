@@ -11,9 +11,11 @@ start = new Date;
 
 startMessage = function() {
   var message;
-  message = "inicializando el conteo " + (start.toString());
+  message = "Inicializando el conteo " + (start.toString());
   growl(message, {
-    sticky: true
+    sticky: true,
+    sound: 'default',
+    title: 'CoffeeNoti'
   });
   return console.log(message);
 };
@@ -22,24 +24,31 @@ pomodoroBreakMessage = function() {
   var message;
   message = "es un buen momento paratomar un descanso de 5 minutos";
   growl(message, {
-    sticky: true
+    sticky: true,
+    sound: 'default',
+    title: 'CoffeeNoti'
   });
   return console.log(message);
 };
 
 pomodoroContinueMessage = function() {
-  message("el tiempo de descanso termino, a trabajar!! llevas " + pomodoros + "pomodoros");
+  var message;
+  message = "el tiempo de descanso termino, a trabajar!! llevas " + (pomodoros - 1) + " pomodoros";
   growl(message, {
-    sticky: true
+    sticky: true,
+    sound: 'default',
+    title: 'CoffeeNoti'
   });
   return console.log(message);
 };
 
 endMessage = function() {
   var message;
-  message = "Fin del conteo, pasaron: " + minutes + "m " + i + "s y lograste: " + pomodoros + " pomodoros con " + rests + " descansos";
+  message = "Fin del conteo, pasaron: " + minutes + "m " + i + "s y lograste: " + (pomodoros - 1) + " pomodoros con " + rests + " descansos";
   growl(message, {
-    sticky: true
+    sticky: true,
+    sound: 'default',
+    title: 'CoffeeNoti'
   });
   return console.log(message);
 };
@@ -50,7 +59,7 @@ printElapsedTime = function() {
   if (i % 60 === 0) {
     if (restCount > 0) {
       restCount--;
-      if (restCount === 1) {
+      if (restCount === 0) {
         pomodoroContinueMessage();
         rests++;
       }
@@ -63,7 +72,7 @@ printElapsedTime = function() {
   }
   if (pomodoroCount % 25 === 0) {
     if (pomodoros > 0) {
-      restCount = 300;
+      restCount = 5;
       pomodoroBreakMessage();
     }
     pomodoroCount = 1;
