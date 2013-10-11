@@ -1,31 +1,56 @@
+#init vars
 growl = require('growl')
 i = 1
-minutes = null
-restCount = pomodoroCount = 0
-pomodoros = rests = 0
+minutes = restCount = pomodoroCount = pomodoros = rests = 0
 start = new Date
-startMessage = "inicializando el conteo #{start.toString()}"
-growl(startMessage)
-console.log(startMessage)
 
+#messages:
+startMessage = ->
+	message = "inicializando el conteo #{start.toString()}"
+	growl(message, {sticky: true })
+	console.log(message)
+
+pomodoroBreakMessage = ->
+	message = "es un buen momento paratomar un descanso de 5 minutos"
+	growl(message, {sticky: true})
+	console.log(message)
+
+pomodoroContinueMessage = ->
+	message("el tiempo de descanso termino, a trabajar!! llevas #{pomodoros}pomodoros") 	
+	growl(message, {sticky: true})
+	console.log(message)
+
+endMessage = ->
+	message = "Fin del conteo, pasaron: #{minutes}m #{i}s y lograste: #{pomodoros} pomodoros con #{rests} descansos"	
+	growl(message, {sticky: true})
+	console.log(message)
+
+#core process
+startMessage()
 printElapsedTime = ->		
 	if i%60 == 0
-		if restCount > 0 then restCount--
-		minutes++
+		if restCount > 0  
+			restCount-- 
+			if restCount == 1
+				pomodoroContinueMessage()
+				rests++
+		else 
+			pomodoroCount++			
+		minutes++		
 		i=1
-		message = "han pasado #{minutes} minutos"		
-		console.log(message)
-	if minutes % 25 == 0 && restCount==0
-		if pomodoros > 0 
-			rests++
-			message = "es un buen momento paratomar un descanso de 5 minutos"			
+		console.log("ET #{minutes}m")
+	if pomodoroCount % 25 == 0
+		if pomodoros > 0
+			restCount = 300		
+			pomodoroBreakMessage()
+		pomodoroCount = 1		
 		pomodoros++
-		restCount = 300		
-		growl(message, {sticky: true})
 	i += 1	
 
+#start process
 setInterval(printElapsedTime, 1000)
 
+# end process listeners
 process.on('SIGTSTP', -> 
   endMessage()
   process.exit(0)
@@ -35,8 +60,3 @@ process.on('SIGINT', ->
   endMessage()
   process.exit(0)
 );
-
-endMessage = ->
-	message = "Fin del conteo, pasaron: #{minutes}m #{i}s y lograste: #{pomodoros} pomodoros con #{rests} descansos"
-	console.log(message)
-	growl(message, {sticky: true})
