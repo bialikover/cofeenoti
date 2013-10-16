@@ -20,10 +20,16 @@ pomodoroContinueMessage = ->
 	growl(message, {sticky: true, sound: 'default', title: 'CoffeeNoti'})
 	console.log(message)
 
-endMessage = ->
-	message = "Fin del conteo, pasaron: #{minutes}m #{i}s y lograste: #{pomodoros-1} pomodoros con #{rests} descansos"	
+endMessage =(hours, minutes_left) ->
+	message = "Fin del conteo, pasaron: #{hours}h #{minutes_left}m #{i}s y lograste: #{pomodoros-1} pomodoros con #{rests} descansos"	
 	growl(message, {sticky: true, sound: 'default', title: 'CoffeeNoti'})
 	console.log(message)
+
+#print results
+printResults = ->
+	hours = Math.round(minutes/60)
+	minutes_left = minutes%60
+	endMessage(hours, minutes_left)
 
 #core process
 startMessage()
@@ -52,11 +58,11 @@ setInterval(printElapsedTime, 1000)
 
 # end process listeners
 process.on('SIGTSTP', -> 
-  endMessage()
+  printResults()
   process.exit(0)
 );
 
 process.on('SIGINT', -> 
-  endMessage()
+  printResults()
   process.exit(0)
 );
