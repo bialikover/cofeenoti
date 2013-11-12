@@ -30,7 +30,7 @@ endMessage =(hours, minutes_left) ->
 
 #print results
 printResults = ->
-	hours = Math.round(minutes/60)
+	hours = Math.floor(minutes/60)
 	minutes_left = minutes%60
 	endMessage(hours, minutes_left)
 
