@@ -15,7 +15,6 @@ https://github.com/visionmedia/node-growl
  note: you can use ruby o brew to install terminal-notifier...
 	   brew install terminal-notifier
 
-
 # How To use:
 To start simply:
 	node coffeenoti.js 
