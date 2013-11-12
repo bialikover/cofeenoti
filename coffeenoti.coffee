@@ -1,7 +1,7 @@
 #init vars
 growl = require 'growl'
 fs = require 'fs'
-prompt = require 'prompt'
+readline = require 'readline'
 i = 1
 minutes = restCount = pomodoroCount = pomodoros = rests = hours = minutes_left = 0
 start = new Date
@@ -69,10 +69,13 @@ writeReport = (file, description)->
 
 #ask for description
 askForDescription = ->
-	process.stdin.resume();
-	process.stdin.setEncoding('utf8');
-	#i left coding here...
-
+	rl = readline.createInterface({
+  		input: process.stdin,
+  		output: process.stdout
+  	})
+	rl.question "En que estuviste trabajando? ", (answer) ->  
+  		writeReport(savePath, answer)		
+  		rl.close()
 
 #start process
 startMessage()
@@ -81,14 +84,12 @@ setInterval(printElapsedTime, 1000)
 # end process listeners
 process.on('SIGTSTP', -> 
   printResults()
-  description = askForDescription()
-  writeReport(savePath, description)
+  askForDescription()
 );
 
 process.on('SIGINT', -> 
   printResults()
-  description = askForDescription()
-  writeReport(savePath, description)
+  askForDescription()
 );
 
 #end process 
