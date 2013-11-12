@@ -14,13 +14,17 @@ you just need to have node and npm installed.
 https://github.com/visionmedia/node-growl
  note: you can use ruby o brew to install terminal-notifier...
 	   brew install terminal-notifier
+node growl mod with sound package comes with this version.
+make a dir for your reports eg: mkdir reports in  the same level of this file.
 
 # How To use:
 To start simply:
-	node coffeenoti.js 
+	node coffeenoti.js or
+	coffee coffeenoti.coffee
 
 To finish
 	ctr + z || ctr + c
+	and then type a comment in which you where working on.
 
 Feel free to use or improve it :)
 
